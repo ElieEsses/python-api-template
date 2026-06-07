@@ -1,4 +1,5 @@
 import os
+
 import dotenv
 
 dotenv.load_dotenv()
@@ -23,8 +24,12 @@ def _get_list(name: str, default: str) -> list[str]:
     return [item.strip() for item in value.split(",") if item.strip()]
 
 
-DEBUG_MODE = _get_bool("DEBUG", default=False)
+DEBUG_MODE = _get_bool("DEBUG_MODE", default=False)
 PORT = _get_int("PORT", default=8000)
 FRONTEND_ORIGINS = _get_list("FRONTEND_ORIGINS", "http://localhost:3000")
 DB_SCHEMA_PATH = os.environ.get("DB_SCHEMA_PATH", "./Project/db/schema.sql")
 DB_PATH = os.environ.get("DB_PATH", "./data.db")
+
+JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
+JWT_ALGORITHM = os.environ.get("JWT_ALGORITHM")
+JWT_ACCESS_TOKEN_EXPIRE_MINUTES = _get_int("JWT_ACCESS_TOKEN_EXPIRE_MINUTES", 60)
