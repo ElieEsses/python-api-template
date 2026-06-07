@@ -33,6 +33,8 @@ with get_db() as db:
     row = db.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
 ```
 
+`init_db(db_schema_path)` runs the schema SQL file to create tables. It's called automatically on startup from `main.py`.
+
 Schema is in `Project/db/schema.sql`. Default tables: `users` and `data`.
 
 ## Auth
