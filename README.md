@@ -6,6 +6,7 @@ Minimal FastAPI starter with SQLite, CORS, JWT auth, and environment-based confi
 
 ```bash
 cp .env.example .env
+chmod +x run.sh
 ./run.sh
 ```
 
