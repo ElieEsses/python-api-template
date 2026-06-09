@@ -61,4 +61,5 @@ Create `Project/routes/yourroute.py` with a `router = APIRouter()`, then add it 
 ## Linting & Formatting
 
 Use `ruff check . --fix && ruff format .` for auto-fix, linting, and formatting
+
 Config in pyproject.toml: line length 88, double quotes, checks pycodestyle, pyflakes, imports, bugbear, and pyupgrade.
