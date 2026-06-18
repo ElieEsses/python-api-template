@@ -2,7 +2,7 @@
 set -e
 
 if [ -n "$1" ] && [ "$1" != "reset" ] && [ "$1" != "update" ] && [ "$1" != "fix" ]; then
-    echo "Unknown command: $1 (use: reset, update, or no argument)"
+    echo "Unknown command: $1 (use: reset, update, fix, or no argument)"
     exit 1
 fi
 
