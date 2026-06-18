@@ -10,6 +10,12 @@ chmod +x run.sh
 ./run.sh
 ```
 
+## run.sh
+`./run.sh` builds new venv and runs
+`./run.sh reset` deletes old venv, creates new, and runs
+`./run.sh update` installs (new) dependencies, and runs
+`./run.sh fix` runs ruff format and check, and runs
+
 API runs at `http://localhost:8000`. Docs at `/docs`.
 
 ## Env Variables
@@ -60,6 +66,6 @@ Create `Project/routes/yourroute.py` with a `router = APIRouter()`, then add it 
 
 ## Linting & Formatting
 
-Use `ruff check . --fix && ruff format .` for auto-fix, linting, and formatting
+Use `ruff check . --fix && ruff format .` or `./run.sh fix` for auto-fix, linting, and formatting
 
 Config in pyproject.toml: line length 88, double quotes, checks pycodestyle, pyflakes, imports, bugbear, and pyupgrade.

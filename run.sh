@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-if [ -n "$1" ] && [ "$1" != "reset" ] && [ "$1" != "update" ]; then
+if [ -n "$1" ] && [ "$1" != "reset" ] && [ "$1" != "update" ] && [ "$1" != "fix" ]; then
     echo "Unknown command: $1 (use: reset, update, or no argument)"
     exit 1
 fi
@@ -18,6 +18,12 @@ if [ "$1" = "update" ]; then
     echo "Updating virtual environment..."
     source venv/bin/activate
     python -m pip install -r requirements.txt
+fi
+
+if [ "$1" = "fix" ]; then
+    source venv/bin/activate
+    ruff check . --fix && ruff format .
+    exit 0
 fi
 
 if [ ! -d "venv" ]; then
