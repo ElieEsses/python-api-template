@@ -28,4 +28,4 @@ if [ ! -d "venv" ]; then
 fi
 
 source venv/bin/activate
-python Project/main.py
+python -m Project.main
