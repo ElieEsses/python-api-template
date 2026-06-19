@@ -46,8 +46,3 @@ def root():
 
 for route_module in all_routes:
     app.include_router(route_module.router, prefix="/api")
-
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run("Project.main:app", host="0.0.0.0", port=PORT, reload=DEBUG_MODE)
