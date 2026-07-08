@@ -6,16 +6,16 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from Project.config import DB_SCHEMA_PATH, DEBUG_MODE, FRONTEND_ORIGINS
 from Project.db.DBUtils import init_db
-from Project.routes import all_routes
+from Project.routes import auth, example, health
 
 if DEBUG_MODE:
     logging.basicConfig(
         level=logging.DEBUG,
         format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
     )
-    logging.getLogger("httpx").setLevel(logging.WARNING)
-    logging.getLogger("httpcore").setLevel(logging.WARNING)
-    logging.getLogger("hpack").setLevel(logging.WARNING)
+    # logging.getLogger("httpx").setLevel(logging.WARNING)
+    # logging.getLogger("httpcore").setLevel(logging.WARNING)
+    # logging.getLogger("hpack").setLevel(logging.WARNING)
 
 
 @asynccontextmanager
@@ -38,11 +38,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-@app.get("/")
-def root():
-    return {"message": "FastAPI template is running"}
-
-
-for route_module in all_routes:
-    app.include_router(route_module.router, prefix="/api")
+app.include_router(health.router, tags=["Health"])
+app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
+app.include_router(example.router, prefix="/api", tags=["Example"])

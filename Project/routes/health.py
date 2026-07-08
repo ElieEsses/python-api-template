@@ -3,6 +3,6 @@ from fastapi import APIRouter
 router = APIRouter()
 
 
-@router.get("/health")
+@router.get("/")
 def health():
     return {"message": "Health check passed", "status": "ok"}

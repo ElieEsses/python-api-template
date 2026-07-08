@@ -5,12 +5,21 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "bcrypt==4.0.1",
     "fastapi>=0.139.0",
-    "passlib==1.7.4",
+    "passlib[bcrypt]==1.7.4",
     "pydantic>=2.13.4",
     "python-dotenv>=1.2.2",
+    "python-jose[cryptography]>=3.5.0",
     "uvicorn>=0.50.2",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.15.20",
+]
+
 
 [tool.ruff.lint]
 select = [
@@ -32,10 +41,4 @@ extend-immutable-calls = [
     "fastapi.File",
     "fastapi.Form",
     "fastapi.Security",
-]
-
-[dependency-groups]
-dev = [
-    "pytest>=9.1.1",
-    "ruff>=0.15.20",
 ]
