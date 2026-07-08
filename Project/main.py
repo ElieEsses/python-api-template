@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from Project.config import DB_SCHEMA_PATH, DEBUG_MODE, FRONTEND_ORIGINS, PORT
+from Project.config import DB_SCHEMA_PATH, DEBUG_MODE, FRONTEND_ORIGINS
 from Project.db.DBUtils import init_db
 from Project.routes import all_routes
 

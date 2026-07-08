@@ -1,6 +1,16 @@
-[tool.ruff]
-line-length = 88
-target-version = "py312"
+[project]
+name = "python-api-template"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.139.0",
+    "passlib==1.7.4",
+    "pydantic>=2.13.4",
+    "python-dotenv>=1.2.2",
+    "uvicorn>=0.50.2",
+]
 
 [tool.ruff.lint]
 select = [
@@ -24,6 +34,8 @@ extend-immutable-calls = [
     "fastapi.Security",
 ]
 
-[tool.ruff.format]
-quote-style = "double"
-indent-style = "space"
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "ruff>=0.15.20",
+]

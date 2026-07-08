@@ -1,43 +1,26 @@
-.PHONY: help start run install restart fix
-
-PYTHON = ./venv/bin/python
-
-help:
-	@echo "start    Create venv, install deps, run app"
-	@echo "run      Run app"
-	@echo "install  Install dependencies"
-	@echo "restart  Recreate venv"
-	@echo "fix      Run Ruff fixes and formatting"
-
-start:
-	@if [ ! -d "venv" ]; then \
-		echo "Creating virtual environment..."; \
-		python3 -m venv venv; \
-	fi
-	@echo "Installing dependencies..."
-	@$(PYTHON) -m pip install -r requirements.txt
-	@echo "Running app..."
-	@$(PYTHON) -m Project.main
-
-# run:
-# 	@$(PYTHON) -m Project.main
+.PHONY: run test lint format fix check
 
 run:
-	@$(PYTHON) -m uvicorn Project.main:app --reload --port 8000
+	uv run uvicorn Project.main:app --reload
 
-run-prod:
-	@$(PYTHON) -m uvicorn Project.main:app --workers 4 --port 8000
+test:
+	uv run pytest -v
 
-install:
-	@echo "Installing dependencies..."
-	@$(PYTHON) -m pip install -r requirements.txt
-
-restart:
-	@echo "Recreating virtual environment..."
-	@rm -rf venv
-	@python3 -m venv venv
-	@$(PYTHON) -m pip install -r requirements.txt
+coverage:
+	uv run coverage run -m pytest
+	uv run coverage report -m
 
 fix:
-	@ruff check . --fix
-	@ruff format .
+	uv run ruff check . --fix
+	uv run ruff format .
+
+ci:
+	uv run ruff check .
+	uv run pytest
+
+clean:
+	rm -rf .coverage
+	rm -rf htmlcov
+	rm -rf .ruff_cache
+	rm -rf .pytest_cache
+	find . -type d -name '__pycache__' -exec rm -rf {} +
