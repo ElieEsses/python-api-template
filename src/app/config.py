@@ -1,6 +1,9 @@
+from importlib.metadata import metadata
 from typing import List
 
 from pydantic_settings import BaseSettings
+
+_meta = metadata("python-api-template")
 
 
 class Settings(BaseSettings):
@@ -8,7 +11,7 @@ class Settings(BaseSettings):
     port: int = 8000
     frontend_origins: List[str] = ["http://localhost:3000"]
 
-    db_schema_path: str = "./Project/db/schema.sql"
+    db_schema_path: str = "./src/app/db/schema.sql"
     db_path: str = "./data.db"
 
     jwt_secret_key: str
@@ -18,5 +21,9 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
 
+
+APP_NAME = _meta["Name"]
+APP_VERSION = _meta["Version"]
+APP_DESCRIPTION = _meta.get("Summary", "")
 
 settings = Settings()  # type: ignore[call-arg]

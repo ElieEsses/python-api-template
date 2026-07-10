@@ -1,7 +1,7 @@
 import sqlite3
 from contextlib import contextmanager
 
-from Project.config import settings
+from src.app.config import settings
 
 
 @contextmanager

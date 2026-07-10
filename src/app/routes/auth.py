@@ -2,10 +2,10 @@ import logging
 
 from fastapi import APIRouter, Depends, HTTPException, Response
 
-from Project.config import settings
-from Project.db.DBUtils import get_db
-from Project.models.auth import LoginRequest, SignupRequest, UserResponse
-from Project.services import auth
+from src.app.config import settings
+from src.app.db.DBUtils import get_db
+from src.app.models.auth import LoginRequest, SignupRequest, UserResponse
+from src.app.services import auth
 
 logger = logging.getLogger(__name__)
 

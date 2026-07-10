@@ -4,9 +4,9 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from Project.config import settings
-from Project.db.DBUtils import init_db
-from Project.routes import auth, example, health
+from src.app.config import APP_NAME, APP_VERSION, settings
+from src.app.db.DBUtils import init_db
+from src.app.routes import auth, example, health
 
 logging.basicConfig(
     level=logging.DEBUG if settings.debug_mode else logging.INFO,
@@ -22,7 +22,10 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="FastAPI Template", version="0.1.0", lifespan=lifespan, port=settings.port
+    title=APP_NAME,
+    version=APP_VERSION,
+    port=settings.port,
+    lifespan=lifespan,
 )
 
 app.add_middleware(
