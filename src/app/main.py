@@ -1,11 +1,9 @@
 import logging
-from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.app.config import APP_NAME, APP_VERSION, settings
-from src.app.db.DBUtils import init_db
 from src.app.routes import auth, example, health
 
 logging.basicConfig(
@@ -15,18 +13,7 @@ logging.basicConfig(
 )
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    init_db(settings.db_schema_path)
-    yield
-
-
-app = FastAPI(
-    title=APP_NAME,
-    version=APP_VERSION,
-    port=settings.port,
-    lifespan=lifespan,
-)
+app = FastAPI(title=APP_NAME, version=APP_VERSION, port=settings.port)
 
 app.add_middleware(
     CORSMiddleware,

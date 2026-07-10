@@ -2,8 +2,8 @@ import logging
 
 from fastapi import APIRouter, Depends, HTTPException, Response
 
+from app.db import get_db
 from src.app.config import settings
-from src.app.db.DBUtils import get_db
 from src.app.models.auth import LoginRequest, SignupRequest, UserResponse
 from src.app.services import auth
 

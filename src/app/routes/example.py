@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from src.app.db.DBUtils import get_db
+from app.db import get_db
 from src.app.models.data import Data, UserData
 
 router = APIRouter()

@@ -5,8 +5,8 @@ from fastapi import HTTPException, Request
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 
+from app.db import get_db
 from src.app.config import settings
-from src.app.db.DBUtils import get_db
 from src.app.models.auth import UserResponse
 
 crypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

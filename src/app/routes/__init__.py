@@ -1,4 +1,3 @@
-from src.app.routes import health
-from src.app.routes import auth, example
+from src.app.routes import auth, example, health
 
-all_routes = [health, example, auth]
+__all__ = ["health", "example", "auth"]

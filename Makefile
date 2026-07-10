@@ -24,6 +24,8 @@ check:
 	uv run ruff check .
 	uv run pytest -q
 
+db-init:
+	uv run python -c "from app.db import init_db; init_db()"
 clean:
 	rm -rf .coverage
 	rm -rf htmlcov
