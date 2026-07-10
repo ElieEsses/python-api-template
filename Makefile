@@ -1,4 +1,4 @@
-.PHONY: run test lint format fix check
+.PHONY: run test coverage lint format fix check
 
 run:
 	uv run uvicorn Project.main:app --reload
@@ -10,13 +10,19 @@ coverage:
 	uv run coverage run -m pytest
 	uv run coverage report -m
 
-fix:
-	uv run ruff check . --fix
+lint:
+	uv run ruff check .
+
+format:
 	uv run ruff format .
 
-ci:
+fix:
+	uv run ruff format .
+	uv run ruff check . --fix
+
+check:
 	uv run ruff check .
-	uv run pytest
+	uv run pytest -q
 
 clean:
 	rm -rf .coverage

@@ -1,35 +1,22 @@
-import os
+from typing import List
 
-import dotenv
-
-dotenv.load_dotenv()
+from pydantic_settings import BaseSettings
 
 
-def _get_bool(name: str, default: bool = False) -> bool:
-    return os.environ.get(name, str(default)).strip().lower() in {
-        "1",
-        "true",
-        "yes",
-        "on",
-    }
+class Settings(BaseSettings):
+    debug_mode: bool = False
+    port: int = 8000
+    frontend_origins: List[str] = ["http://localhost:3000"]
+
+    db_schema_path: str = "./Project/db/schema.sql"
+    db_path: str = "./data.db"
+
+    jwt_secret_key: str
+    jwt_algorithm: str = "HS256"
+    jwt_access_token_expire_minutes: int = 60
+
+    class Config:
+        env_file = ".env"
 
 
-def _get_int(name: str, default: int) -> int:
-    value = os.environ.get(name)
-    return int(value) if value not in (None, "") else default
-
-
-def _get_list(name: str, default: str) -> list[str]:
-    value = os.environ.get(name, default)
-    return [item.strip() for item in value.split(",") if item.strip()]
-
-
-DEBUG_MODE = _get_bool("DEBUG_MODE", default=False)
-PORT = _get_int("PORT", default=8000)
-FRONTEND_ORIGINS = _get_list("FRONTEND_ORIGINS", "http://localhost:3000")
-DB_SCHEMA_PATH = os.environ.get("DB_SCHEMA_PATH", "./Project/db/schema.sql")
-DB_PATH = os.environ.get("DB_PATH", "./data.db")
-
-JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
-JWT_ALGORITHM = os.environ.get("JWT_ALGORITHM")
-JWT_ACCESS_TOKEN_EXPIRE_MINUTES = _get_int("JWT_ACCESS_TOKEN_EXPIRE_MINUTES", 60)
+settings = Settings()  # type: ignore[call-arg]

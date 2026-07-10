@@ -4,35 +4,30 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from Project.config import DB_SCHEMA_PATH, DEBUG_MODE, FRONTEND_ORIGINS
+from Project.config import settings
 from Project.db.DBUtils import init_db
 from Project.routes import auth, example, health
 
-if DEBUG_MODE:
-    logging.basicConfig(
-        level=logging.DEBUG,
-        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
-    )
-    # logging.getLogger("httpx").setLevel(logging.WARNING)
-    # logging.getLogger("httpcore").setLevel(logging.WARNING)
-    # logging.getLogger("hpack").setLevel(logging.WARNING)
+logging.basicConfig(
+    level=logging.DEBUG if settings.debug_mode else logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(filename)s:%(lineno)d | %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    init_db(DB_SCHEMA_PATH)
+    init_db(settings.db_schema_path)
     yield
 
 
 app = FastAPI(
-    title="FastAPI Template",
-    version="0.1.0",
-    lifespan=lifespan,
+    title="FastAPI Template", version="0.1.0", lifespan=lifespan, port=settings.port
 )
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=FRONTEND_ORIGINS,
+    allow_origins=settings.frontend_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
