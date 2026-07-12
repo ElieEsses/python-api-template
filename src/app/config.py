@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     frontend_origins: List[str] = ["http://localhost:3000"]
 
     db_schema_path: str = "./src/app/db/schema.sql"
-    db_path: str = "./data.db"
+    db_path: str = "sqlite:///data.db"
 
     jwt_secret_key: str
     jwt_algorithm: str = "HS256"

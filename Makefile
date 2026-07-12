@@ -1,4 +1,4 @@
-.PHONY: run test coverage lint format fix check
+.PHONY: run test coverage lint format fix check init-db
 
 run:
 	uv run uvicorn src.app.main:app --reload
@@ -24,8 +24,9 @@ check:
 	uv run ruff check .
 	uv run pytest -q
 
-db-init:
+init-db:
 	uv run python -c "from app.db import init_db; init_db()"
+
 clean:
 	rm -rf .coverage
 	rm -rf htmlcov

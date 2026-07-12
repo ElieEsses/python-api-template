@@ -1,28 +1,31 @@
-import sqlite3
-from contextlib import contextmanager
-from pathlib import Path
+from collections.abc import Generator
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session, sessionmaker
 
 from src.app.config import settings
+from src.app.db.models.models import Base
 
 DB_PATH = settings.db_path
-DB_SCHEMA_PATH = settings.db_schema_path
+
+engine = create_engine(
+    DB_PATH,
+    connect_args={"check_same_thread": False},
+)
+SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
 
-@contextmanager
-def get_db():
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
+def get_db() -> Generator[Session, None, None]:
+    db = SessionLocal()
     try:
-        yield conn
-        conn.commit()
+        yield db
+        db.commit()
     except Exception:
-        conn.rollback()
+        db.rollback()
         raise
     finally:
-        conn.close()
+        db.close()
 
 
 def init_db() -> None:
-    schema = Path(DB_SCHEMA_PATH)
-    with get_db() as conn:
-        conn.executescript(schema.read_text(encoding="utf-8"))
+    Base.metadata.create_all(bind=engine)

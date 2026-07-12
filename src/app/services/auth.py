@@ -1,11 +1,14 @@
 import re
 from datetime import UTC, datetime, timedelta
 
-from fastapi import HTTPException, Request
+from fastapi import Depends, HTTPException, Request
 from jose import JWTError, jwt
 from passlib.context import CryptContext
+from sqlalchemy import select
+from sqlalchemy.orm import Session
 
 from app.db import get_db
+from app.db.models.models import UsersORM
 from src.app.config import settings
 from src.app.models.auth import UserResponse
 
@@ -44,7 +47,7 @@ def decode_access_token(token: str) -> dict:
     )
 
 
-def get_current_user(request: Request) -> UserResponse:
+def get_current_user(request: Request, db: Session = Depends(get_db)) -> UserResponse:
     token = request.cookies.get("access_token")
 
     if token is None:
@@ -59,17 +62,15 @@ def get_current_user(request: Request) -> UserResponse:
     if user_id is None:
         raise HTTPException(status_code=401, detail="Invalid token")
 
-    with get_db() as db:
-        user = db.execute(
-            "SELECT id, name, email FROM users WHERE id = ?",
-            (user_id,),
-        ).fetchone()
+    user = db.execute(
+        select(UsersORM).where(UsersORM.id == int(user_id))
+    ).scalar_one_or_none()
 
     if user is None:
         raise HTTPException(status_code=401, detail="User not found")
 
     return UserResponse(
-        id=user["id"],
-        name=user["name"],
-        email=user["email"],
+        id=user.id,
+        name=user.name,
+        email=user.email,
     )

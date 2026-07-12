@@ -8,7 +8,7 @@ class Base(DeclarativeBase):
     pass
 
 
-class User(Base):
+class UsersORM(Base):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -37,7 +37,7 @@ class User(Base):
     )
 
 
-class Data(Base):
+class DataORM(Base):
     __tablename__ = "data"
 
     id: Mapped[int] = mapped_column(primary_key=True)
