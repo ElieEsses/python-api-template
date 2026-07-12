@@ -3,7 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.db import get_db
-from src.app.db.models.models import DataORM
+from app.db.models import DataORM
 from src.app.models.data import Data, UserData
 
 router = APIRouter()

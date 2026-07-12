@@ -8,7 +8,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.db import get_db
-from app.db.models.models import UsersORM
+from app.db.models import UsersORM
 from src.app.config import settings
 from src.app.models.auth import UserResponse
 

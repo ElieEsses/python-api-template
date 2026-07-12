@@ -3,8 +3,8 @@ from collections.abc import Generator
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
+from app.db.models import Base
 from src.app.config import settings
-from src.app.db.models.models import Base
 
 DB_PATH = settings.db_path
 
